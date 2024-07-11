@@ -1,3 +1,10 @@
+SHeets - https://docs.google.com/spreadsheets/d/1xSo1HndSsaR7HjOxCECQupffo-CgTE0J9elQlINKEaQ/edit?gid=0#gid=0
+
+Tictactoe ghub - https://github.com/VecchiR/tictactoe/blob/main/script.js
+
+ODIN - https://www.theodinproject.com/lessons/node-path-javascript-battleship
+
+
 4 grids - 2 for each player (places ships + opp's shots | logs own shots)
 square grids: 10x10
 individual squares in the grid are identified by letter and number
@@ -17,3 +24,4 @@ After the ships have been positioned, the game proceeds in a series of rounds.
 In each round, each player takes a turn to announce a target square in the opponent's grid which is to be shot at. The opponent announces whether or not the square is occupied by a ship. If it is a "hit", the player who is hit marks this on their own "ocean" or grid (with a red peg in the pegboard version), and announces what ship was hit. The attacking player marks the hit or miss on their own "tracking" or "target" grid with a pencil marking in the paper version of the game, or the appropriate color peg in the pegboard version (red for "hit", white for "miss"), in order to build up a picture of the opponent's fleet.
 
 When all of the squares of a ship have been hit, the ship's owner announces the sinking of the Carrier, Submarine, Cruiser/Destroyer/Patrol Boat, or the titular Battleship. If all of a player's ships have been sunk, the game is over and their opponent wins.
+

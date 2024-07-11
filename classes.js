@@ -1,8 +1,10 @@
 class Ship {
-    constructor(size) {
-        this.length = size;
+    constructor(type) {
+        this.length = this.getLength(type);
         this.hits = 0;
         this.sunk = false;
+        this.type = type;
+        this.boardMarker = this.getBoardMarker(type);
     }
 
     hit() {
@@ -13,6 +15,25 @@ class Ship {
     isSunk() {
         return !(this.length - this.hits > 0);
     }
+
+    getLength(type) {
+        switch (type) {
+            case 'patrol boat':
+                return 2;
+            case 'submarine':
+                return 3;
+            case 'destroyer':
+                return 3;
+            case 'battleship':
+                return 4;
+            case 'carrier':
+                return 5;
+        }
+    }
+
+    getBoardMarker(type) {
+        return type.at(0).toUpperCase();
+    }
 }
 
 class GameBoard {
@@ -22,22 +43,14 @@ class GameBoard {
 
     resetBoard() {
         let reboard = new Array(10);
-        for(let i = 0; i<10; i++) {
+        for (let i = 0; i < 10; i++) {
             reboard[i] = new Array(10);
         }
         return reboard;
     }
 
-    writeOnBoard(x, y) {
-        if (board[x][y] === '') {
-            board[x][y] = gameflow.getActivePlayer().getMarker();
-            return true;
-        }
-
-        else {
-            displayController.updMsgDisplay('Space already taken! Choose another one');
-            return false;
-        }
+    placeShip(ship, [x, y], verticalOrientation = false) {
+        
     }
 }
 
