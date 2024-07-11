@@ -24,3 +24,9 @@ test('properly create ship', () => {
     })
 });
 
+test('properly construct gameboard AND reset it', () => {
+    const b1 = new classes.GameBoard();
+    expect(b1.board.length).toBe(10);
+    expect(b1.board[0].length).toBe(10);
+    expect(b1.board[9].length).toBe(10);
+});
