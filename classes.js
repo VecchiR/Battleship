@@ -128,7 +128,10 @@ class GameBoard {
 }
 
 class Player {
-
+    constructor(type = 'human') {
+        this.type = type;
+        this.gameBoard = new GameBoard();
+    }
 }
 
 
