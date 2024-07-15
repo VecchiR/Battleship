@@ -111,6 +111,20 @@ class GameBoard {
         return availabilityResponse;
     }
 
+    getShipFromBoardMarker(marker) {
+        switch (marker) {
+            case 'P':
+                return this.ships.patrol;
+            case 'S':
+                return this.ships.submarine;
+            case 'D':
+                return this.ships.destroyer;
+            case 'B':
+                return this.ships.battleship;
+            case 'C':
+                return this.ships.carrier;
+        }
+    }
 }
 
 class Player {
