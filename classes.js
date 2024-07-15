@@ -57,14 +57,53 @@ class GameBoard {
 
     placeShip(ship, [x, y], verticalOrientation = false) {
         let length = ship.getLength();
+
+        // CHECK BEFORE PLACING = devolver um erro quando tenta placeShip onde nao tem espaço/ja tem ship
+        let available = this.checkSpaceAvailable(length, [x, y], verticalOrientation);
+        if (available.state === false) {
+            return available.msg;
+        }
+
         for (let i = 0; i < length; i++) {
             //if horizontal, i is added to y(columns), if vertical, i is added to x(rows)
-            this.board 
-            [x - 1 + i * verticalOrientation] 
-            [y - 1 + i * !verticalOrientation] 
-            = ship.getBoardMarker();
+            this.board
+            [x - 1 + i * verticalOrientation]
+            [y - 1 + i * !verticalOrientation]
+                = ship.getBoardMarker();
         }
+
+        return 'done!';
     }
+
+    checkSpaceAvailable(shipLength, [x, y], verticalOrientation) {
+        let availabilityResponse = {
+            state: false,
+            msg: 'Ship cannot be placed here!'
+        }
+        let i = 0;
+        let foundConflict;
+        while (i < shipLength) {
+            try {
+                foundConflict = this.board
+                [x - 1 + i * verticalOrientation]
+                [y - 1 + i * !verticalOrientation]
+                    != '';
+            } catch {
+                return availabilityResponse;
+            }
+
+            if (foundConflict) {
+                return availabilityResponse;
+            }
+
+            i++;
+        }
+
+        availabilityResponse.state = true;
+        availabilityResponse.msg = '';
+        return availabilityResponse;
+    }
+
 }
 
 class Player {
@@ -79,5 +118,13 @@ const modExp = {
     GameBoard,
     Player
 };
+
+
+const board = new GameBoard();
+const ship1 = new Ship('battleship');
+board.placeShip(ship1, [8, 1], true);
+console.log(board);
+let string = 'dode';
+console.log(string);
 
 module.exports = modExp;

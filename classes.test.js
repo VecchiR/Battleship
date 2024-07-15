@@ -40,12 +40,12 @@ test('place ship on gameboard', () => {
     const ship1 = new classes.Ship('destroyer');
     board.placeShip(ship1, [4,4]);
 
-    const ship2 = new classes.Ship('battleship');
-    board.placeShip(ship2, [5,5]);
-
     expect(board.board[3]).toEqual(
         ['','','','D','D','D','','','','']
     );
+    const ship2 = new classes.Ship('battleship');
+    board.placeShip(ship2, [5,5]);
+
 
     expect(board.board[4]).toEqual(
         ['','','','','B','B','B','B','','']
@@ -57,11 +57,20 @@ test('place ship on gameboard', () => {
         ['','','','','','','','','','']
     );
 
+
     const ship3 = new classes.Ship('destroyer');
     board.placeShip(ship3, [5,5], true);
     expect(board.board[4][4]).toEqual('D');
     expect(board.board[5][4]).toEqual('D');
     expect(board.board[6][4]).toEqual('D');
+    console.log(board);
 
-    board.resetBoard();
+
+    const ship4 = new classes.Ship('battleship');
+    expect(board.placeShip(ship4, [8,8])).toEqual('Ship cannot be placed here!');
+    expect(board.placeShip(ship4, [5,5])).toEqual('Ship cannot be placed here!');
+    expect(board.placeShip(ship4, [5,4])).toEqual('Ship cannot be placed here!');
+    expect(board.placeShip(ship4, [8,1], true)).toEqual('Ship cannot be placed here!');
+
+
 });
