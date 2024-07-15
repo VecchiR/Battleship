@@ -125,6 +125,17 @@ class GameBoard {
                 return this.ships.carrier;
         }
     }
+
+    receiveAttack([x, y]) {
+        let spaceContent = this.board[x -1 ][y -1];
+        if(spaceContent === '') {
+            return 'miss';    
+        }
+        else {
+            return this.getShipFromBoardMarker(spaceContent).hit();
+        };
+    }
+
 }
 
 class Player {
@@ -143,12 +154,5 @@ const modExp = {
     Player
 };
 
-
-const board = new GameBoard();
-const ship1 = new Ship('battleship');
-board.placeShip(ship1, [8, 1], true);
-console.log(board);
-let string = 'dode';
-console.log(string);
 
 module.exports = modExp;
