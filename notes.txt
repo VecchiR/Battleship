@@ -12,7 +12,7 @@ individual squares in the grid are identified by letter and number
 1st - arrange ships
 
 No.	Class of ship	Size
-1	Carrier	5
+1	Carrier	    5
 2	Battleship	4
 3	Destroyer	3
 4	Submarine	3

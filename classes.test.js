@@ -36,12 +36,32 @@ test('properly construct gameboard AND reset it', () => {
     expect(b1.board[9].length).toBe(10);
 });
 
-test.only('place ship on gameboard', () => {
-    const ship = new classes.Ship('destroyer');
-    board.placeShip(ship, [1,1]);
+test('place ship on gameboard', () => {
+    const ship1 = new classes.Ship('destroyer');
+    board.placeShip(ship1, [4,4]);
 
-    expect(board.board[0]).toEqual(
-        ['D','D','D','','','','','','','']
+    const ship2 = new classes.Ship('battleship');
+    board.placeShip(ship2, [5,5]);
+
+    expect(board.board[3]).toEqual(
+        ['','','','D','D','D','','','','']
     );
 
+    expect(board.board[4]).toEqual(
+        ['','','','','B','B','B','B','','']
+    );
+
+    board.resetBoard();
+
+    expect(board.board[3]).toEqual(
+        ['','','','','','','','','','']
+    );
+
+    const ship3 = new classes.Ship('destroyer');
+    board.placeShip(ship3, [5,5], true);
+    expect(board.board[4][4]).toEqual('D');
+    expect(board.board[5][4]).toEqual('D');
+    expect(board.board[6][4]).toEqual('D');
+
+    board.resetBoard();
 });

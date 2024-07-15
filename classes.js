@@ -1,9 +1,9 @@
 class Ship {
     constructor(type) {
+        this.type = type;
         this.length = this.getLength(type);
         this.hits = 0;
         this.sunk = false;
-        this.type = type;
         this.boardMarker = this.getBoardMarker(type);
     }
 
@@ -16,7 +16,7 @@ class Ship {
         return !(this.length - this.hits > 0);
     }
 
-    getLength(type) {
+    getLength(type = this.type) {
         switch (type) {
             case 'patrol boat':
                 return 2;
@@ -31,26 +31,39 @@ class Ship {
         }
     }
 
-    getBoardMarker(type) {
+    getBoardMarker(type = this.type) {
         return type.at(0).toUpperCase();
     }
 }
 
 class GameBoard {
     constructor() {
-        this.board = this.resetBoard();
+        this.board = this.createBoard();
+    }
+
+    createBoard() {
+        let newBoard = new Array(10);
+        for (let i = 0; i < 10; i++) {
+            newBoard[i] = Array(10).fill('');
+        }
+        return newBoard;
     }
 
     resetBoard() {
-        let reboard = new Array(10);
         for (let i = 0; i < 10; i++) {
-            reboard[i] = new Array(10);
+            this.board[i] = Array(10).fill('');
         }
-        return reboard;
     }
 
     placeShip(ship, [x, y], verticalOrientation = false) {
-        
+        let length = ship.getLength();
+        for (let i = 0; i < length; i++) {
+            //if horizontal, i is added to y(columns), if vertical, i is added to x(rows)
+            this.board 
+            [x - 1 + i * verticalOrientation] 
+            [y - 1 + i * !verticalOrientation] 
+            = ship.getBoardMarker();
+        }
     }
 }
 
