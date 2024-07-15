@@ -39,6 +39,13 @@ class Ship {
 class GameBoard {
     constructor() {
         this.board = this.createBoard();
+        this.ships = {
+            carrier : new Ship('carrier'),
+            battleship : new Ship('battleship'),
+            destroyer : new Ship('destroyer'),
+            submarine : new Ship('submarine'),
+            patrol  : new Ship('patrol boat')
+        };
     }
 
     createBoard() {
