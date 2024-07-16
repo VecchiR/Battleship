@@ -1,4 +1,4 @@
-class Ship {
+export class Ship {
     constructor(type) {
         this.type = type;
         this.length = this.getLength(type);
@@ -36,7 +36,7 @@ class Ship {
     }
 }
 
-class GameBoard {
+export class GameBoard {
     constructor() {
         this.board = this.createBoard();
         this.ships = {
@@ -140,7 +140,7 @@ class GameBoard {
 }
 
 
-class Player {
+export class Player {
     constructor(type = 'human') {
         this.type = type;
         this.playerBoard = new GameBoard(); 
@@ -150,11 +150,11 @@ class Player {
 
 
 
-const modExp = {
-    Ship,
-    GameBoard,
-    Player
-};
+// const modExp = {
+//     Ship,
+//     GameBoard,
+//     Player
+// };
 
 
-module.exports = modExp;
+// module.exports = modExp;

@@ -1,10 +1,10 @@
-const classes = require('./classes');
+import { Ship, GameBoard, Player } from "./classes.js";
 
-const board = new classes.GameBoard();
-const p1 = new classes.Player();
+const board = new GameBoard();
+const p1 = new Player();
 
 test('properly create ship', () => {
-    const ship = new classes.Ship('patrol boat');
+    const ship = new Ship('patrol boat');
     expect(ship).toEqual({
         boardMarker: 'P',
         length: 2,
@@ -23,27 +23,27 @@ test('properly create ship', () => {
 });
 
 test('properly construct gameboard AND reset it', () => {
-    const b1 = new classes.GameBoard();
+    const b1 = new GameBoard();
     expect(b1.board.length).toBe(10);
     expect(b1.board[0].length).toBe(10);
     expect(b1.board[9].length).toBe(10);
 });
 
 test('properly construct gameboard AND reset it', () => {
-    const b1 = new classes.GameBoard();
+    const b1 = new GameBoard();
     expect(b1.board.length).toBe(10);
     expect(b1.board[0].length).toBe(10);
     expect(b1.board[9].length).toBe(10);
 });
 
 test('place ship on gameboard', () => {
-    const ship1 = new classes.Ship('destroyer');
+    const ship1 = new Ship('destroyer');
     board.placeShip(ship1, [4, 4]);
 
     expect(board.board[3]).toEqual(
         ['', '', '', 'D', 'D', 'D', '', '', '', '']
     );
-    const ship2 = new classes.Ship('battleship');
+    const ship2 = new Ship('battleship');
     board.placeShip(ship2, [5, 5]);
 
 
@@ -58,20 +58,20 @@ test('place ship on gameboard', () => {
     );
 
 
-    const ship3 = new classes.Ship('destroyer');
+    const ship3 = new Ship('destroyer');
     board.placeShip(ship3, [5, 5], true);
     expect(board.board[4][4]).toEqual('D');
     expect(board.board[5][4]).toEqual('D');
     expect(board.board[6][4]).toEqual('D');
 
 
-    const ship4 = new classes.Ship('battleship');
+    const ship4 = new Ship('battleship');
     expect(board.placeShip(ship4, [8, 8])).toEqual('Ship cannot be placed here!');
     expect(board.placeShip(ship4, [5, 5])).toEqual('Ship cannot be placed here!');
     expect(board.placeShip(ship4, [5, 4])).toEqual('Ship cannot be placed here!');
     expect(board.placeShip(ship4, [8, 1], true)).toEqual('Ship cannot be placed here!');
 
-    board.placeShip(new classes.Ship('patrol boat'), [1, 1]);
+    board.placeShip(new Ship('patrol boat'), [1, 1]);
     expect(board.board[0]).toEqual(['P', 'P', '', '', '', '', '', '', '', '']);
 
 });

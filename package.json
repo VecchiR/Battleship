@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Battleship - from The Odin Project (jul 2024)",
   "main": "index.js",
+  "jest": {
+    "transform": {}
+  },
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "build": "webpack",
     "watch": "webpack --watch"
   },
