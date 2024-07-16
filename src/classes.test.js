@@ -78,7 +78,7 @@ test('place ship on gameboard', () => {
 
 test('create player and its gameboard', () => {
     expect(p1.type).toEqual('human');
-    expect(p1.gameBoard.board).toEqual([["", "", "", "", "", "", "", "", "", ""], ["", "", "", "", "", "", "", "", "", ""], 
+    expect(p1.playerBoard.board).toEqual([["", "", "", "", "", "", "", "", "", ""], ["", "", "", "", "", "", "", "", "", ""], 
     ["", "", "", "", "", "", "", "", "", ""], 
     ["", "", "", "", "", "", "", "", "", ""], 
     ["", "", "", "", "", "", "", "", "", ""], 
@@ -90,7 +90,7 @@ test('create player and its gameboard', () => {
 })
 
 test('attack p1', () => {
-    p1.gameBoard.placeShip(p1.gameBoard.ships.battleship,[1,1]);
-    p1.gameBoard.receiveAttack([1,2]);
-    expect(p1.gameBoard.ships.battleship.hits).toBe(1);
+    p1.playerBoard.placeShip(p1.playerBoard.ships.battleship,[1,1]);
+    p1.playerBoard.receiveAttack([1,2]);
+    expect(p1.playerBoard.ships.battleship.hits).toBe(1);
 })

@@ -40,11 +40,11 @@ class GameBoard {
     constructor() {
         this.board = this.createBoard();
         this.ships = {
-            carrier : new Ship('carrier'),
-            battleship : new Ship('battleship'),
-            destroyer : new Ship('destroyer'),
-            submarine : new Ship('submarine'),
-            patrol  : new Ship('patrol boat')
+            carrier: new Ship('carrier'),
+            battleship: new Ship('battleship'),
+            destroyer: new Ship('destroyer'),
+            submarine: new Ship('submarine'),
+            patrol: new Ship('patrol boat')
         };
     }
 
@@ -127,12 +127,13 @@ class GameBoard {
     }
 
     receiveAttack([x, y]) {
-        let spaceContent = this.board[x -1 ][y -1];
-        if(spaceContent === '') {
-            return 'miss';    
+        let spaceContent = this.board[x - 1][y - 1];
+        if (spaceContent === '') {
+            return spaceContent = 'miss';
         }
         else {
-            return this.getShipFromBoardMarker(spaceContent).hit();
+            this.getShipFromBoardMarker(spaceContent).hit();
+            return spaceContent = 'hit';
         };
     }
 
@@ -141,7 +142,7 @@ class GameBoard {
 class Player {
     constructor(type = 'human') {
         this.type = type;
-        this.gameBoard = new GameBoard();
+        this.playerBoard = new GameBoard();
     }
 }
 
