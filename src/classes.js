@@ -139,11 +139,12 @@ class GameBoard {
 
 }
 
+
 class Player {
     constructor(type = 'human') {
         this.type = type;
-        this.playerBoard = new GameBoard();
-    }
+        this.playerBoard = new GameBoard(); 
+        }
 }
 
 
