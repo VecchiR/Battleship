@@ -90,12 +90,60 @@ test('create player and its gameboard', () => {
     ["", "", "", "", "", "", "", "", "", ""]]);
 })
 
-test('attack p1', () => {
-    p1.playerBoard.placeShip(p1.playerBoard.ships.battleship,[1,1]);
-    p1.playerBoard.receiveAttack([1,2]);
-    expect(p1.playerBoard.ships.battleship.hits).toBe(1);
+test('see if checkIfAllShipsSunk returns the correct array', () => {
+    const psunk = new Player();
+    expect(psunk.playerBoard.checkIfAllShipsSunk()).toEqual(false);
+    psunk.playerBoard.ships.battleship.sunk = true;
+    psunk.playerBoard.ships.carrier.sunk = true;
+    psunk.playerBoard.ships.patrol.sunk = true;
+    psunk.playerBoard.ships.submarine.sunk = true;
+    psunk.playerBoard.ships.destroyer.sunk = true;
+    expect(psunk.playerBoard.checkIfAllShipsSunk()).toEqual(true);
 })
 
-test.only('see if checkIfAllShipsSunk returns the correct array', () => {
-    expect(p1.playerBoard.checkIfAllShipsSunk()).toEqual(true);
+test('test validateCoordinate to check if the coordinate can be attacked', () => {
+    const pval = new Player();
+    pval.playerBoard.placeShip(pval.playerBoard.ships.battleship,[1,1]);
+    expect(pval.playerBoard.validadeCoordinate([1,1])).toBe(true);
+    expect(pval.playerBoard.validadeCoordinate([0,1])).toBe(false);
+    expect(pval.playerBoard.validadeCoordinate(['1',1])).toBe(false);
+    pval.playerBoard.receiveAttack([1,1]);
+    expect(pval.playerBoard.validadeCoordinate([1,1])).toBe(false);
+})
+
+test('test if player can be attacked and the ship records the attack', () => {
+    const pattack = new Player();
+    pattack.playerBoard.placeShip(pattack.playerBoard.ships.battleship,[1,1]);
+    pattack.playerBoard.receiveAttack([1,2]);
+    expect(pattack.playerBoard.ships.battleship.hits).toBe(1);
+    expect(pattack.playerBoard.ships.battleship)
+})
+
+test('check if checkGameOver works', () => {
+    const flow = new GameFlow();
+    expect(flow.checkGameOver()).toBe(false);
+    flow.player1.playerBoard.ships.battleship.sunk = true;
+    flow.player1.playerBoard.ships.carrier.sunk = true;
+    flow.player1.playerBoard.ships.patrol.sunk = true;
+    flow.player1.playerBoard.ships.submarine.sunk = true;
+    expect(flow.checkGameOver()).toBe(false);
+    flow.player1.playerBoard.ships.destroyer.sunk = true;
+    expect(flow.checkGameOver()).toBe(true);
+
+})
+
+test('check if selectSpace stops when invalid coordinates are selected', () => {
+    const flow = new GameFlow();
+    flow.playerTurn = 1;
+    expect(flow.getActivePlayer().name).toBe('player1');
+    flow.player1.playerBoard.placeShip(flow.player1.playerBoard.ships.battleship,[1,1]);
+    flow.player2.playerBoard.placeShip(flow.player1.playerBoard.ships.battleship,[1,1]);
+    expect(flow.selectSpace([1,1])).toBe(undefined);
+    expect(flow.player2.playerBoard.ships.battleship.hits).toBe(1);
+    expect(flow.getActivePlayer().name).toBe('player2');
+    expect(flow.selectSpace([1,1])).toBe(undefined);
+    expect(flow.player1.playerBoard.ships.battleship.hits).toBe(1);
+    expect(flow.getActivePlayer().name).toBe('player1');
+    expect(flow.selectSpace([1,1])).toBe('Invalid coordinates selected!');
+    expect(flow.selectSpace([0,1])).toBe('Invalid coordinates selected!');
 })
