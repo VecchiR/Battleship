@@ -1,5 +1,6 @@
-import { Ship, GameBoard, Player } from "./classes.js";
+import { Ship, GameFlow, GameBoard, Player } from "./classes.js";
 
+const gameflow = new GameFlow();
 const board = new GameBoard();
 const p1 = new Player();
 
@@ -93,4 +94,8 @@ test('attack p1', () => {
     p1.playerBoard.placeShip(p1.playerBoard.ships.battleship,[1,1]);
     p1.playerBoard.receiveAttack([1,2]);
     expect(p1.playerBoard.ships.battleship.hits).toBe(1);
+})
+
+test.only('see if checkIfAllShipsSunk returns the correct array', () => {
+    expect(p1.playerBoard.checkIfAllShipsSunk()).toEqual(true);
 })

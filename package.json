@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "description": "Battleship - from The Odin Project (jul 2024)",
   "main": "index.js",
-  "jest": {
-    "transform": {}
-  },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "jest",
     "build": "webpack",
     "watch": "webpack --watch"
   },
@@ -15,11 +12,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.24.9",
+    "@babel/preset-env": "^7.24.8",
+    "babel-jest": "^29.7.0",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.0",
     "jest": "^29.7.0",
     "style-loader": "^4.0.0",
-    "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4"
   }
 }
