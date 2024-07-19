@@ -2,6 +2,20 @@
 
 > This is a version of the popular Battleship game (made as a project for completing The Odin Project's Javascript section)
 
+## Languages used:
+<br>HTML
+<br>CSS
+<br>JavaScript (ES6)
+
+## Tools used:
+<br>VSCode
+<br>Git
+<br>NodeJS
+<br>Webpack
+<br>Jest
+<br>Babel
+
+
 ## Author
 
 👤 **Rafael Vecchi**
