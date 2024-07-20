@@ -27,4 +27,4 @@ This project serves as the final project for the JavaScript module in The Odin P
 👤 **Rafael Vecchi**
 
 * Github: [@VecchiR](https://github.com/VecchiR)
-* LinkedIn: [@rafael-vecchi-silva-9588ab149](https://linkedin.com/in/rafael-vecchi-silva-9588ab149)
+* LinkedIn: [@rafaelvecchisilva](https://www.linkedin.com/in/rafaelvecchisilva/)
