@@ -3,7 +3,7 @@
 This project serves as the final project for the JavaScript module in The Odin Project curriculum. It's a web-based implementation of the classic Battleship game, allowing local matches between two players or against a CPU <sub>(soon)</sub>.
 
 
-**Technologies Used:**
+### Technologies Used:
 
 -   **Frontend:**
     -   HTML
@@ -15,7 +15,7 @@ This project serves as the final project for the JavaScript module in The Odin P
     -   Jest (unit testing framework)
 <br>
 
-**Learning Objectives:**
+### Learning Objectives:
 
 -   **Solidify JavaScript (ES6) fundamentals** by applying concepts like classes, modularization and DOM manipulation to build a dynamic web application
 -   **Implement game logic** by developing mechanics like ship placement, attack resolution, win/lose conditions, and AI decision-making algorithms <sub>(soon)</sub>
