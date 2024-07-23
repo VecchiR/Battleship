@@ -79,34 +79,18 @@ export class DisplayController {
 
     initializeGrid(gridContainer) {
 
-        for (let i = 0; i < 100; i++) {
+        for (let row = 1; row <= 10; row++) {
+            for (let col = 1; col <= 10; col++) {
             const sqrDiv = document.createElement('div');
+sqrDiv.setAttribute('row', row);
+                sqrDiv.setAttribute('col', col);
             sqrDiv.className = 'cell';
             gridContainer.appendChild(sqrDiv);
-
-            // sqrDiv.addEventListener('mouseenter', () => {
-            //     if (randomColorMode) {
-            //         let randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-            //         sqrDiv.style.backgroundColor = randomColor;
-            //     }
-
-            //     else {
-            //         if (progressiveDarkeningMode === true && !sqrDiv.style.backgroundColor) {
-            //             sqrDiv.style.backgroundColor = "#909090";
-            //         }
-
-            //         else if (progressiveDarkeningMode === true && sqrDiv.style.backgroundColor) {
-            //             let newColor = updateColor(sqrDiv.style.backgroundColor);
-            //             sqrDiv.style.backgroundColor = newColor;
-            //         }
-
-            //         else {
-            //             sqrDiv.style.backgroundColor = 'black';
-            //         }
-            //     }
-            // })
+}
         }
+
     }
+
 
     renderPlayerBoard(player) {
         const board = player.playerBoard.board;
