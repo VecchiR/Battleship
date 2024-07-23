@@ -63,9 +63,9 @@ export class DisplayController {
         this.updMsgDisplay('turn');
     }
 
-    updMsgDisplay(arg) {
+    updMsgDisplay(gameflowObj, arg) {
         if (arg === 'turn') {
-            this.msgDisplay.innerHTML = `${gameflow.getActivePlayer().name}, it's your turn!`;
+            this.msgDisplay.innerHTML = `${gameflowObj.getActivePlayer().name}, it's your turn!`;
         } else {
             this.msgDisplay.innerHTML = arg;
         }
@@ -81,12 +81,12 @@ export class DisplayController {
 
         for (let row = 1; row <= 10; row++) {
             for (let col = 1; col <= 10; col++) {
-            const sqrDiv = document.createElement('div');
-sqrDiv.setAttribute('row', row);
+                const sqrDiv = document.createElement('div');
+                sqrDiv.setAttribute('row', row);
                 sqrDiv.setAttribute('col', col);
-            sqrDiv.className = 'cell';
-            gridContainer.appendChild(sqrDiv);
-}
+                sqrDiv.className = 'cell';
+                gridContainer.appendChild(sqrDiv);
+            }
         }
 
     }
