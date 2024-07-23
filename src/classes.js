@@ -3,7 +3,7 @@ export class Ship {
         this.type = type;
         this.length = this.getLength(type);
         this.hits = 0;
-        this.sunk = false;
+        this.sunk = null;
         this.boardMarker = this.getBoardMarker(type);
     }
 
@@ -63,6 +63,7 @@ export class GameBoard {
     }
 
     placeShip(ship, [x, y], verticalOrientation = false) {
+        ship.sunk = false;
         let length = ship.getLength();
 
         // CHECK BEFORE PLACING = devolver um erro quando tenta placeShip onde nao tem espaço/ja tem ship
@@ -148,7 +149,7 @@ export class GameBoard {
     checkIfAllShipsSunk() {
         const shipsArray = Object.values(this.ships);
         return shipsArray.every(ship => {
-            return ship.sunk;
+            return ship.sunk === true || ship.sunk === null;
         });
 
     }
