@@ -112,10 +112,11 @@ export class DisplayController {
         board.forEach((row, rowIndex) => {
             // Loop through each cell in the row
             row.forEach((cellContent, cellIndex) => {
+                const cell = this.rightBoard.children[rowIndex * 10 + cellIndex]; // Calculate cell index
                 if (cellContent === '' || cellContent === 'hit' || cellContent === 'miss') {
-                    const cell = this.rightBoard.children[rowIndex * 10 + cellIndex]; // Calculate cell index
                     cell.textContent = cellContent; // Set the cell content
                 }
+                else { cell.textContent = '';}
             });
         });
     }
