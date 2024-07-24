@@ -18,13 +18,47 @@ export class DisplayController {
         this.rightBoard = document.querySelector('.opp-board');
     }
 
-    removeStartScreen() {
-        gameflow.setPlayers(
-            this.playerXName.value ? this.playerXName.value : this.playerXName.placeholder,
-            this.playerOName.value ? this.playerOName.value : this.playerOName.placeholder
-        );
-        this.mainContainer.removeChild(this.startContainer);
-        return true;
+
+    initializeGameplayScreen() {
+
+        const mainContainer = document.querySelector('.main-container');
+
+        // Remove existing content except the main container
+        while (mainContainer.firstChild) {
+            mainContainer.removeChild(mainContainer.firstChild);
+        }
+
+        const gameContainer = document.createElement('div');
+        gameContainer.classList.add('game-container');
+        mainContainer.appendChild(gameContainer);
+
+
+        const messageDisplay = document.createElement('span');
+        messageDisplay.classList.add('message-display');
+        messageDisplay.textContent = 'message display :3';
+        gameContainer.appendChild(messageDisplay);
+
+
+        const playerBoard = document.createElement('div');
+        playerBoard.classList.add('player-board');
+        gameContainer.appendChild(playerBoard);
+        this.leftBoard = document.querySelector('.player-board');
+
+
+        const oppBoard = document.createElement('div');
+        oppBoard.classList.add('opp-board');
+        gameContainer.appendChild(oppBoard);
+        this.rightBoard = document.querySelector('.opp-board');
+    }
+
+
+    initializeMsgDisplay() {
+        this.msgDisplay = document.querySelector('.message-display');
+    }
+
+    initializeBoards() {
+        this.initializeGrid(document.querySelector('.player-board'));
+        this.initializeGrid(document.querySelector('.opp-board'));
     }
 
     resetScreen() {
@@ -116,7 +150,7 @@ export class DisplayController {
                 if (cellContent === '' || cellContent === 'hit' || cellContent === 'miss') {
                     cell.textContent = cellContent; // Set the cell content
                 }
-                else { cell.textContent = '';}
+                else { cell.textContent = ''; }
             });
         });
     }

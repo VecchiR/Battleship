@@ -172,12 +172,11 @@ export class GameFlow {
         this.playerTurn = null;
         this.gameOverMsg = null;
         this.gameOVerFlag = false;
-        this.setPlayers();
     }
 
-    setPlayers() {
-        this.player1 = new Player('player1');
-        this.player2 = new Player('player2');
+    setPlayers(p1name, p2name, p2type) {
+        this.player1 = new Player(p1name);
+        this.player2 = new Player(p2name, p2type);
         this.playerTurn = Math.floor(Math.random() * 2) + 1;
     }
 

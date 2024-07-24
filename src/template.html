@@ -8,14 +8,25 @@
 </head>
 
 <body>
-    <div class="main-container"> <span class="message-display">message display :3</span>
-        <div class="player-board">
 
-        </div>
-        <div class="opp-board">
-
+    <div class="main-container">
+        <div class="start-container">
+            <label for="player1">
+                <span>P1:</span>
+                <input type="text" name="player1" id="player1" placeholder="Player 1">
+            </label>
+            <label for="player2">
+                <span>P2:</span>
+                <input type="text" name="player2" id="player2" placeholder="CPU" disabled> <select name="type"
+                    id="type">
+                    <option value="cpu">CPU</option>
+                    <option value="human">HUM</option>
+                </select>
+            </label>
+            <button class="start btn">Start!</button>
         </div>
     </div>
+
 </body>
 
 </html>

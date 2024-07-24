@@ -1,10 +1,9 @@
-import { initializeMsgDisplay, initializeUI, placeShipsTEST } from './helperFunctions.js';
+import { placeShipsTEST, setupInitialScreen } from './helperFunctions.js';
 import './style.css';
 
 
 
-placeShipsTEST();
-initializeUI();
+setupInitialScreen();
 
 
 

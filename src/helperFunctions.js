@@ -5,14 +5,63 @@ export const displayControllerObj = new DisplayController();
 export const gameFlowObj = new GameFlow();
 
 
-export function initializeUI() {
-    initializeMsgDisplay();
-    initializeBoards();
-    addEventListeners();
+export function setupInitialScreen() {
+    addEventListenersToP2Selection();
+    addEventListenerToStartButton();
+}
+
+export function startGame() {
+    initializeUI();
     changeTurn();
 }
 
-export function addEventListeners() {
+export function addEventListenersToP2Selection() {
+    const player2Input = document.getElementById('player2');
+    const playerTypeSelect = document.getElementById('type');
+
+    playerTypeSelect.addEventListener('change', function () {
+        const selectedType = playerTypeSelect.value;
+        if (selectedType === 'cpu') {
+            player2Input.value = 'CPU';  // Set value to CPU
+            player2Input.disabled = true;  // Disable input
+            player2Input.placeholder = 'CPU';
+        } else {
+            player2Input.value = '';  // Clear value
+            player2Input.disabled = false; // Enable input
+            player2Input.placeholder = 'Player 2';
+        }
+    });
+}
+
+export function addEventListenerToStartButton() {
+    const startButton = document.querySelector('.start');
+    startButton.addEventListener('click', () => {
+        setPlayers();
+        placeShipsTEST();
+        startGame();
+    });
+}
+
+export function setPlayers() {
+    let p1name = document.getElementById('player1').value;
+    let p2name = document.getElementById('player2').value;
+    const p2type = document.getElementById('type').value;
+    
+    p1name === '' ? p1name = 'Player 1' : null;
+    if (p2type === 'cpu') { p2name = 'CPU'; }
+    else if (p2name === '') { p2name = 'Player 2'; }
+    
+    gameFlowObj.setPlayers(p1name, p2name, p2type);
+}
+
+export function initializeUI() {
+    displayControllerObj.initializeGameplayScreen();
+    displayControllerObj.initializeMsgDisplay();
+    displayControllerObj.initializeBoards();
+    addEventListenersToOppBoard();
+}
+
+export function addEventListenersToOppBoard() {
     const allSquares = document.querySelectorAll('.opp-board > .cell');
     allSquares.forEach(sqr => {
         sqr.addEventListener('click', function () {
@@ -29,14 +78,6 @@ export function sendAttackTo(sqr) {
     gameFlowObj.selectSpace([row, col]);
 }
 
-export function initializeMsgDisplay() {
-    displayControllerObj.msgDisplay = document.querySelector('.message-display');
-}
-
-export function initializeBoards() {
-    displayControllerObj.initializeGrid(document.querySelector('.player-board'));
-    displayControllerObj.initializeGrid(document.querySelector('.opp-board'));
-}
 
 export function placeShipsTEST() {
     gameFlowObj.player1.playerBoard.placeShip(gameFlowObj.player1.playerBoard.ships.battleship, [1, 1], false);
