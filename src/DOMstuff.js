@@ -16,6 +16,8 @@ export class DisplayController {
 
         this.leftBoard = document.querySelector('.player-board');
         this.rightBoard = document.querySelector('.opp-board');
+
+        this.modal = null;
     }
 
 
@@ -50,6 +52,8 @@ export class DisplayController {
         gameContainer.appendChild(oppBoard);
         this.rightBoard = document.querySelector('.opp-board');
     }
+
+
 
 
     initializeMsgDisplay() {
@@ -155,5 +159,19 @@ export class DisplayController {
         });
     }
 
+    setupModal() {
+        this.modal = document.querySelector('.modal');
+        this.modal.addEventListener('click', () => {
+            this.hidePassDeviceScreen();
+        });
+    }
+
+    showPassDeviceScreen() {
+        this.modal.style.display = 'block';
+    }
+
+    hidePassDeviceScreen() {
+        this.modal.style.display = 'none';
+    }
 
 }

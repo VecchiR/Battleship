@@ -6,6 +6,7 @@ export const gameFlowObj = new GameFlow();
 
 
 export function setupInitialScreen() {
+    displayControllerObj.setupModal();
     addEventListenersToP2Selection();
     addEventListenerToStartButton();
 }
@@ -46,11 +47,11 @@ export function setPlayers() {
     let p1name = document.getElementById('player1').value;
     let p2name = document.getElementById('player2').value;
     const p2type = document.getElementById('type').value;
-    
+
     p1name === '' ? p1name = 'Player 1' : null;
     if (p2type === 'cpu') { p2name = 'CPU'; }
     else if (p2name === '') { p2name = 'Player 2'; }
-    
+
     gameFlowObj.setPlayers(p1name, p2name, p2type);
 }
 
@@ -110,7 +111,15 @@ export function changeTurn() {
     displayControllerObj.renderPlayerBoard(gameFlowObj.getActivePlayer());
     displayControllerObj.renderOpponentBoard(gameFlowObj.getOpponent());
     displayControllerObj.updMsgDisplay(gameFlowObj, 'turn');
+    displayControllerObj.showPassDeviceScreen();
 }
+
+
+
+
+
+
+
 
 
 
