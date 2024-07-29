@@ -3,6 +3,7 @@ import { DisplayController } from './DOMstuff.js';
 
 export const displayControllerObj = new DisplayController();
 export const gameFlowObj = new GameFlow();
+export let type;
 
 
 export function setupInitialScreen() {
@@ -23,12 +24,12 @@ export function addEventListenersToP2Selection() {
     playerTypeSelect.addEventListener('change', function () {
         const selectedType = playerTypeSelect.value;
         if (selectedType === 'cpu') {
-            player2Input.value = 'CPU';  // Set value to CPU
-            player2Input.disabled = true;  // Disable input
+            player2Input.value = 'CPU';
+            player2Input.disabled = true;
             player2Input.placeholder = 'CPU';
         } else {
-            player2Input.value = '';  // Clear value
-            player2Input.disabled = false; // Enable input
+            player2Input.value = '';
+            player2Input.disabled = false;
             player2Input.placeholder = 'Player 2';
         }
     });
@@ -53,6 +54,7 @@ export function setPlayers() {
     else if (p2name === '') { p2name = 'Player 2'; }
 
     gameFlowObj.setPlayers(p1name, p2name, p2type);
+    type = gameFlowObj.player2.type;
 }
 
 export function initializeUI() {
@@ -108,14 +110,22 @@ export function LotsOfAttacksTEST() {
 }
 
 export function changeTurn() {
+    if (type === 'cpu' && gameFlowObj.playerTurn === 2) {
+        cpuPlays();
+    }
     displayControllerObj.renderPlayerBoard(gameFlowObj.getActivePlayer());
     displayControllerObj.renderOpponentBoard(gameFlowObj.getOpponent());
-    if (!gameFlowObj.gameOVerFlag){
+    if (!gameFlowObj.gameOVerFlag) {
         displayControllerObj.updMsgDisplay(gameFlowObj, 'turn');
-        displayControllerObj.showPassDeviceScreen();
+        if (type === 'human') {
+            displayControllerObj.showPassDeviceScreen();
+        }
     }
 }
 
+export function cpuPlays() {
+    gameFlowObj.cpuAttacksRandom();
+}
 
 
 

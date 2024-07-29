@@ -219,6 +219,8 @@ export class GameFlow {
                 //e isso tambem
                 //      displayController.updMsgDisplay('turn');
             }
+
+            return true;
         }
 
         else { return 'Invalid coordinates selected!'; }
@@ -242,5 +244,15 @@ export class GameFlow {
 
     turnOffGameOverFlag() {
         this.gameOVerFlag = false;
+    }
+
+    cpuAttacksRandom() {
+        let x;
+        let y;
+        while (!this.getOpponent().playerBoard.validadeCoordinate([x, y])) {
+            x = Math.floor(Math.random() * 10) + 1;
+            y = Math.floor(Math.random() * 10) + 1;
+        }
+        this.selectSpace([x,y]);
     }
 }
