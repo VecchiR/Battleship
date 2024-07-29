@@ -1,4 +1,4 @@
-import { Ship, GameFlow, GameBoard, Player } from "./classes.js";
+import { Ship, GameFlow, GameBoard, Player, Log } from "./classes.js";
 
 const gameflow = new GameFlow();
 const board = new GameBoard();
@@ -146,4 +146,10 @@ test('check if selectSpace stops when invalid coordinates are selected', () => {
     expect(flow.getActivePlayer().name).toBe('player1');
     expect(flow.selectSpace([1,1])).toBe('Invalid coordinates selected!');
     expect(flow.selectSpace([0,1])).toBe('Invalid coordinates selected!');
+})
+
+test.only('check log class functionality', () => {
+    const log = new Log();
+    log.all.push([1,3]);
+    expect(log.getLast()).toEqual([1,3]);
 })

@@ -162,8 +162,33 @@ export class Player {
         this.name = name;
         this.type = type;
         this.playerBoard = new GameBoard();
+        this.attackLog = new Log();
     }
 }
+
+export class Log {
+    constructor() {
+        this.allAttacks = []; 
+    }
+
+    recordAttack(arr) {
+        this.allAttacks.push(arr);
+    }
+
+    getLastAttack() {
+        return this.allAttacks[this.allAttacks.length-1];
+    }
+
+    getLastAttackCoordinate(){
+        return this.getLastAttack()[0];
+    }
+
+    getLastAttackOutcome(){
+        return this.getLastAttack()[1];
+    }
+
+}
+
 
 export class GameFlow {
     constructor() {
@@ -205,7 +230,8 @@ export class GameFlow {
 
         if (this.getOpponent().playerBoard.validadeCoordinate([x, y])) {
 
-            this.getOpponent().playerBoard.receiveAttack([x,y]);
+            let outcome = this.getOpponent().playerBoard.receiveAttack([x,y]);
+            this.getActivePlayer().attackLog.recordAttack([[x,y],outcome]);
 
             //isso tem que refactor por conta do "displayController"
             //      displayController.updDisplayBoard();
