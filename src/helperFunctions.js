@@ -110,8 +110,10 @@ export function LotsOfAttacksTEST() {
 export function changeTurn() {
     displayControllerObj.renderPlayerBoard(gameFlowObj.getActivePlayer());
     displayControllerObj.renderOpponentBoard(gameFlowObj.getOpponent());
-    displayControllerObj.updMsgDisplay(gameFlowObj, 'turn');
-    displayControllerObj.showPassDeviceScreen();
+    if (!gameFlowObj.gameOVerFlag){
+        displayControllerObj.updMsgDisplay(gameFlowObj, 'turn');
+        displayControllerObj.showPassDeviceScreen();
+    }
 }
 
 
