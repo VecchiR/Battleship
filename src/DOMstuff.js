@@ -1,7 +1,8 @@
 export class DisplayController {
     constructor() {
         this.displayBoard = null;
-        this.msgDisplay = null;
+        this.msgDisplayLine1 = null;
+        this.msgDisplayLine2 = null;
         this.resetButton = null;
         this.gameContainer = null;
 
@@ -15,6 +16,7 @@ export class DisplayController {
         this.rightBoard = document.querySelector('.opp-board');
 
         this.modal = null;
+        this.modalContentH2 = null;
     }
 
 
@@ -32,10 +34,15 @@ export class DisplayController {
         mainContainer.appendChild(gameContainer);
 
 
-        const messageDisplay = document.createElement('span');
-        messageDisplay.classList.add('message-display');
-        messageDisplay.textContent = 'message display :3';
-        gameContainer.appendChild(messageDisplay);
+        const messageDisplayLine1 = document.createElement('span');
+        messageDisplayLine1.classList.add('message-display');
+        messageDisplayLine1.id = 'line1';
+        gameContainer.appendChild(messageDisplayLine1);
+
+        const messageDisplayLine2 = document.createElement('span');
+        messageDisplayLine2.classList.add('message-display');
+        messageDisplayLine2.id = 'line2';
+        gameContainer.appendChild(messageDisplayLine2);
 
 
         const playerBoard = document.createElement('div');
@@ -54,7 +61,8 @@ export class DisplayController {
 
 
     initializeMsgDisplay() {
-        this.msgDisplay = document.querySelector('.message-display');
+        this.msgDisplayLine1 = document.querySelector('#line1');
+        this.msgDisplayLine2 = document.querySelector('#line2');
     }
 
     initializeBoards() {
@@ -98,11 +106,22 @@ export class DisplayController {
         this.updMsgDisplay('turn');
     }
 
-    updMsgDisplay(gameflowObj, arg) {
-        if (arg === 'turn') {
-            this.msgDisplay.innerHTML = `${gameflowObj.getActivePlayer().name}, it's your turn!`;
+    updMsgDisplay(gameflowObj, gameOver) {
+        const you = gameflowObj.getActivePlayer();
+        const opp = gameflowObj.getOpponent();
+        if (!gameOver) {
+            try {
+                this.msgDisplayLine1.innerHTML = `Your last attack: [${you.attackLog.getLastAttackCoordinate()}] 
+                    was a ${you.attackLog.getLastAttackOutcome()}`;
+                this.msgDisplayLine2.innerHTML = `${opp.name}'s last attack: 
+                    [${opp.attackLog.getLastAttackCoordinate()}] was a ${opp.attackLog.getLastAttackOutcome()}`;
+            } catch {
+                this.msgDisplayLine1.innerHTML = `${you.name}, it's time to start this battle!`;
+                this.msgDisplayLine2.innerHTML = `Select a coordinate to attack.`;
+            }
         } else {
-            this.msgDisplay.innerHTML = arg;
+            this.msgDisplayLine1.innerHTML = `${opp.name}'s fleet was destroyed`;
+            this.msgDisplayLine2.innerHTML = `Congratulations, ${you.name}. The victory is yours!`;
         }
     }
 
@@ -161,6 +180,7 @@ export class DisplayController {
         this.modal.addEventListener('click', () => {
             this.hidePassDeviceScreen();
         });
+        this.modalContentH2 = document.querySelector('.modal-content > h2');
     }
 
     showPassDeviceScreen() {

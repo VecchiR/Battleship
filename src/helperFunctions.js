@@ -110,18 +110,21 @@ export function LotsOfAttacksTEST() {
 }
 
 export function changeTurn() {
-    if (type === 'cpu' && gameFlowObj.playerTurn === 2) {
+    const gameOverState = gameFlowObj.gameOVerFlag;
+    if(gameFlowObj.playerTurn === 2 && type === 'cpu') {
         cpuPlays();
     }
+
     displayControllerObj.renderPlayerBoard(gameFlowObj.getActivePlayer());
     displayControllerObj.renderOpponentBoard(gameFlowObj.getOpponent());
-    if (!gameFlowObj.gameOVerFlag) {
-        displayControllerObj.updMsgDisplay(gameFlowObj, 'turn');
-        if (type === 'human') {
-            displayControllerObj.showPassDeviceScreen();
-        }
+
+    displayControllerObj.updMsgDisplay(gameFlowObj, gameOverState);
+    if (type === 'human' && gameOverState === false) {
+        displayControllerObj.modalContentH2.textContent = `It's ${gameFlowObj.getActivePlayer().name}'s turn!`;
+        displayControllerObj.showPassDeviceScreen();
     }
 }
+
 
 export function cpuPlays() {
     gameFlowObj.cpuAttacksRandom();
