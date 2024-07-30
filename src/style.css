@@ -7,6 +7,7 @@ body {
   display: grid;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
+  /* word-spacing: 10px; */
 }
 
 .main-container {
@@ -31,6 +32,10 @@ body {
   font-size: 40px;
 }
 
+.outcome {
+  margin-left: 10px;
+}
+
 
 .player-board,
 .opp-board {
@@ -49,11 +54,11 @@ body {
 }
 
 .opp-board > .cell:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  filter: brightness(180%);
 }
 
 .opp-board > .cell:active {
-  background-color: rgba(0, 0, 0, 0.3);
+  filter: opacity(80%);
 }
 
 .start-container {
@@ -97,4 +102,12 @@ body {
   border: 1px solid #888;
   width: 80%;
   text-align: center;
+}
+
+[outcome='miss'] {
+  background-color: rgb(56, 95, 203);
+}
+
+[outcome='hit'] {
+  background-color: rgb(214, 46, 46);
 }

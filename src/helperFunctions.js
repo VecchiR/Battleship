@@ -115,8 +115,8 @@ export function changeTurn() {
         cpuPlays();
     }
 
-    displayControllerObj.renderPlayerBoard(gameFlowObj.getActivePlayer());
-    displayControllerObj.renderOpponentBoard(gameFlowObj.getOpponent());
+    displayControllerObj.renderBoards(gameFlowObj.getActivePlayer(), gameFlowObj.getOpponent());
+    displayControllerObj.styleBoardsOutcomes(gameFlowObj);
 
     displayControllerObj.updMsgDisplay(gameFlowObj, gameOverState);
     if (type === 'human' && gameOverState === false) {

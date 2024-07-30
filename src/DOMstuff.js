@@ -1,16 +1,7 @@
 export class DisplayController {
     constructor() {
-        this.displayBoard = null;
         this.msgDisplayLine1 = null;
         this.msgDisplayLine2 = null;
-        this.resetButton = null;
-        this.gameContainer = null;
-
-        this.playerXName = document.querySelector('#playerx');
-        this.playerOName = document.querySelector('#playero');
-
-        this.startContainer = document.querySelector('.start-container');
-        this.mainContainer = document.querySelector('.main-container');
 
         this.leftBoard = document.querySelector('.player-board');
         this.rightBoard = document.querySelector('.opp-board');
@@ -18,7 +9,6 @@ export class DisplayController {
         this.modal = null;
         this.modalContentH2 = null;
     }
-
 
     initializeGameplayScreen() {
 
@@ -57,9 +47,6 @@ export class DisplayController {
         this.rightBoard = document.querySelector('.opp-board');
     }
 
-
-
-
     initializeMsgDisplay() {
         this.msgDisplayLine1 = document.querySelector('#line1');
         this.msgDisplayLine2 = document.querySelector('#line2');
@@ -70,51 +57,15 @@ export class DisplayController {
         this.initializeGrid(document.querySelector('.opp-board'));
     }
 
-    resetScreen() {
-        gameboard.resetBoard();
-        gameflow.turnOffGameOverFlag();
-        this.mainContainer.removeChild(this.gameContainer);
-        this.mainContainer.appendChild(this.startContainer);
-    }
-
-    createBoard() {
-        this.gameContainer = document.createElement('div');
-        this.gameContainer.setAttribute('class', 'game-container');
-        this.msgDisplay = document.createElement('span');
-        this.msgDisplay.setAttribute('class', 'messages');
-        this.resetButton = document.createElement('button');
-        this.resetButton.setAttribute('class', 'reset');
-        this.resetButton.innerHTML = 'Reset';
-        this.resetButton.addEventListener('click', () => this.resetScreen());
-        const board = document.createElement('div');
-        board.setAttribute('class', 'board');
-        for (let x = 0; x < 3; x++) {
-            for (let y = 0; y < 3; y++) {
-                let space = document.createElement('div');
-                space.setAttribute('class', 'space');
-                space.setAttribute('spcx', x);
-                space.setAttribute('spcy', y);
-                space.addEventListener('click', () => gameflow.selectSpace(space.getAttribute('spcx'), space.getAttribute('spcy')));
-                board.appendChild(space);
-            }
-        }
-        this.gameContainer.appendChild(this.msgDisplay);
-        this.gameContainer.appendChild(board);
-        this.gameContainer.appendChild(this.resetButton);
-        this.mainContainer.appendChild(this.gameContainer);
-        this.displayBoard = document.querySelectorAll('.space');
-        this.updMsgDisplay('turn');
-    }
-
     updMsgDisplay(gameflowObj, gameOver) {
         const you = gameflowObj.getActivePlayer();
         const opp = gameflowObj.getOpponent();
         if (!gameOver) {
             try {
                 this.msgDisplayLine1.innerHTML = `Your last attack: [${you.attackLog.getLastAttackCoordinate()}] 
-                    was a ${you.attackLog.getLastAttackOutcome()}`;
+                    was a <span id='outcome1' class='outcome'>${you.attackLog.getLastAttackOutcome()}</span>`;
                 this.msgDisplayLine2.innerHTML = `${opp.name}'s last attack: 
-                    [${opp.attackLog.getLastAttackCoordinate()}] was a ${opp.attackLog.getLastAttackOutcome()}`;
+                    [${opp.attackLog.getLastAttackCoordinate()}] was a <span id='outcome2' class='outcome'> ${opp.attackLog.getLastAttackOutcome()}</span>`;
             } catch {
                 this.msgDisplayLine1.innerHTML = `${you.name}, it's time to start this battle!`;
                 this.msgDisplayLine2.innerHTML = `Select a coordinate to attack.`;
@@ -123,12 +74,6 @@ export class DisplayController {
             this.msgDisplayLine1.innerHTML = `${opp.name}'s fleet was destroyed`;
             this.msgDisplayLine2.innerHTML = `Congratulations, ${you.name}. The victory is yours!`;
         }
-    }
-
-    updDisplayBoard() {
-        this.displayBoard.forEach(space => {
-            space.textContent = gameboard.getBoard()[space.getAttribute('spcx')][space.getAttribute('spcy')];
-        });
     }
 
     initializeGrid(gridContainer) {
@@ -145,6 +90,10 @@ export class DisplayController {
 
     }
 
+    renderBoards(player, opp) {
+        this.renderPlayerBoard(player);
+        this.renderOpponentBoard(opp);
+    }
 
     renderPlayerBoard(player) {
         const board = player.playerBoard.board;
@@ -190,5 +139,38 @@ export class DisplayController {
     hidePassDeviceScreen() {
         this.modal.style.display = 'none';
     }
+
+    styleBoardsOutcomes(gameFlowObj) {
+        try {
+            this.stylePlayerBoardOutcomes(gameFlowObj);
+            this.styleOpponentBoardOutcomes(gameFlowObj);
+        } catch {
+            return;
+        }
+    }
+
+    stylePlayerBoardOutcomes(gameFlowObj) {
+        const coordinates = gameFlowObj.getActivePlayer().attackLog.getLastAttackCoordinate();
+        const outcome = gameFlowObj.getActivePlayer().attackLog.getLastAttackOutcome();
+        const boardCell = document.querySelector(`.opp-board > .cell[row="${coordinates[0]}"][col="${coordinates[1]}"]`);
+        boardCell.setAttribute('outcome', `${boardCell.textContent}`);
+    }
+
+    styleOpponentBoardOutcomes(gameFlowObj) {
+        const coordinates = gameFlowObj.getOpponent().attackLog.getLastAttackCoordinate();
+        const outcome = gameFlowObj.getOpponent().attackLog.getLastAttackOutcome();
+        const boardCell = document.querySelector(`.player-board > .cell[row="${coordinates[0]}"][col="${coordinates[1]}"]`);
+        boardCell.setAttribute('outcome', `${boardCell.textContent}`);
+    }
+
+
+    //ADICIONAR UM BOTAO DE RESET NO FIM DA PARTIDA PRA COMEÇAR DE NOVO
+    // resetScreen() {
+    //     gameboard.resetBoard();
+    //     gameflow.turnOffGameOverFlag();
+    //     this.mainContainer.removeChild(this.gameContainer);
+    //     this.mainContainer.appendChild(this.startContainer);
+    // }
+
 
 }

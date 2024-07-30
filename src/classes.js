@@ -156,7 +156,6 @@ export class GameBoard {
 
 }
 
-
 export class Player {
     constructor(name, type = 'human') {
         this.name = name;
@@ -188,7 +187,6 @@ export class Log {
     }
 
 }
-
 
 export class GameFlow {
     constructor() {
