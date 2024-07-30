@@ -62,15 +62,27 @@ export class DisplayController {
         const opp = gameflowObj.getOpponent();
         if (!gameOver) {
             try {
-                this.msgDisplayLine1.innerHTML = `Your last attack: [${you.attackLog.getLastAttackCoordinate()}] 
-                    was a <span id='outcome1' class='outcome'>${you.attackLog.getLastAttackOutcome()}</span>`;
+                const youCoord = you.attackLog.getLastAttackCoordinate();
+                const youOutcome = you.attackLog.getLastAttackOutcome();
+                const oppCoord = opp.attackLog.getLastAttackCoordinate();
+                const oppOutcome = opp.attackLog.getLastAttackOutcome();
+
+                this.msgDisplayLine1.innerHTML = `Your last attack: [${youCoord}] 
+                    was a <span id='outcome1' class='outcome'>${youOutcome}</span>`;
+
                 this.msgDisplayLine2.innerHTML = `${opp.name}'s last attack: 
-                    [${opp.attackLog.getLastAttackCoordinate()}] was a <span id='outcome2' class='outcome'> ${opp.attackLog.getLastAttackOutcome()}</span>`;
-            } catch {
+                    [${oppCoord}] was a <span id='outcome2' class='outcome'> ${oppOutcome}</span>`;
+
+                this.styleMsgDisplayOutcomes(document.querySelector('#outcome1'), youOutcome,
+                    document.querySelector('#outcome2'), oppOutcome);
+            }
+            catch {
                 this.msgDisplayLine1.innerHTML = `${you.name}, it's time to start this battle!`;
                 this.msgDisplayLine2.innerHTML = `Select a coordinate to attack.`;
             }
-        } else {
+        }
+
+        else {
             this.msgDisplayLine1.innerHTML = `${opp.name}'s fleet was destroyed`;
             this.msgDisplayLine2.innerHTML = `Congratulations, ${you.name}. The victory is yours!`;
         }
@@ -161,6 +173,11 @@ export class DisplayController {
         const outcome = gameFlowObj.getOpponent().attackLog.getLastAttackOutcome();
         const boardCell = document.querySelector(`.player-board > .cell[row="${coordinates[0]}"][col="${coordinates[1]}"]`);
         boardCell.setAttribute('outcome', `${boardCell.textContent}`);
+    }
+
+    styleMsgDisplayOutcomes(playerSpan, playerOutcome, oppSpan, oppOutcome) {
+        playerSpan.setAttribute('outcome', playerOutcome);
+        oppSpan.setAttribute('outcome', oppOutcome);
     }
 
 
