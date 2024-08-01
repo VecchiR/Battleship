@@ -58,33 +58,39 @@ export class DisplayController {
     }
 
     updMsgDisplay(gameflowObj, gameOver) {
-        const you = gameflowObj.getActivePlayer();
-        const opp = gameflowObj.getOpponent();
+        const atkLogs = gameflowObj.readLogs();
+        console.log(atkLogs);
         if (!gameOver) {
-            try {
-                const youCoord = you.attackLog.getLastAttackCoordinate();
-                const youOutcome = you.attackLog.getLastAttackOutcome();
-                const oppCoord = opp.attackLog.getLastAttackCoordinate();
-                const oppOutcome = opp.attackLog.getLastAttackOutcome();
+            switch (atkLogs.attacked) {
+                case 'both':
+                    this.msgDisplayLine1.innerHTML = `Your last attack: [${atkLogs.you.coord}] 
+                      was a <span id='outcome1' class='outcome'>${atkLogs.you.outcome}</span>`;
 
-                this.msgDisplayLine1.innerHTML = `Your last attack: [${youCoord}] 
-                    was a <span id='outcome1' class='outcome'>${youOutcome}</span>`;
+                    this.msgDisplayLine2.innerHTML = `${atkLogs.opp.name}'s last attack: 
+                      [${atkLogs.opp.coord}] was a <span id='outcome2' class='outcome'> ${atkLogs.opp.outcome}</span>`;
+                    break;
 
-                this.msgDisplayLine2.innerHTML = `${opp.name}'s last attack: 
-                    [${oppCoord}] was a <span id='outcome2' class='outcome'> ${oppOutcome}</span>`;
+                case 'opp':
+                    this.msgDisplayLine1.innerHTML = `You are under attack! Select a coordinate to fire back!`;
+                    
+                    this.msgDisplayLine2.innerHTML = `${atkLogs.opp.name}'s last attack: 
+                     [${atkLogs.opp.coord}] was a <span id='outcome2' class='outcome'> ${atkLogs.opp.outcome}</span>`;
 
-                this.styleMsgDisplayOutcomes(document.querySelector('#outcome1'), youOutcome,
-                    document.querySelector('#outcome2'), oppOutcome);
+                    break;
+
+                case 'none':
+                    this.msgDisplayLine1.innerHTML = `${atkLogs.you.name}, it's time to start this battle!`;
+                    this.msgDisplayLine2.innerHTML = `Select a coordinate to attack.`;
+                    break;
             }
-            catch {
-                this.msgDisplayLine1.innerHTML = `${you.name}, it's time to start this battle!`;
-                this.msgDisplayLine2.innerHTML = `Select a coordinate to attack.`;
-            }
+
+            this.styleMsgDisplayOutcomes(document.querySelector('#outcome1'), atkLogs.you.outcome,
+                document.querySelector('#outcome2'), atkLogs.opp.outcome);
         }
 
         else {
-            this.msgDisplayLine1.innerHTML = `${opp.name}'s fleet was destroyed`;
-            this.msgDisplayLine2.innerHTML = `Congratulations, ${you.name}. The victory is yours!`;
+            this.msgDisplayLine1.innerHTML = `${atkLogs.opp.name}'s fleet was destroyed`;
+            this.msgDisplayLine2.innerHTML = `Congratulations, ${atkLogs.you.name}. The victory is yours!`;
         }
     }
 
@@ -155,9 +161,15 @@ export class DisplayController {
     styleBoardsOutcomes(gameFlowObj) {
         try {
             this.stylePlayerBoardOutcomes(gameFlowObj);
+        }
+        catch {
+            // return;
+        }
+        try {
             this.styleOpponentBoardOutcomes(gameFlowObj);
-        } catch {
-            return;
+        }
+        catch {
+
         }
     }
 
@@ -176,8 +188,8 @@ export class DisplayController {
     }
 
     styleMsgDisplayOutcomes(playerSpan, playerOutcome, oppSpan, oppOutcome) {
-        playerSpan.setAttribute('outcome', playerOutcome);
-        oppSpan.setAttribute('outcome', oppOutcome);
+        if (playerOutcome) { playerSpan.setAttribute('outcome', playerOutcome); }
+        if (oppOutcome) { oppSpan.setAttribute('outcome', oppOutcome); }
     }
 
 

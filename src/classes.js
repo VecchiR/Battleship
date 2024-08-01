@@ -167,7 +167,7 @@ export class Player {
 
 export class Log {
     constructor() {
-        this.allAttacks = []; 
+        this.allAttacks = [];
     }
 
     recordAttack(arr) {
@@ -175,15 +175,27 @@ export class Log {
     }
 
     getLastAttack() {
-        return this.allAttacks[this.allAttacks.length-1];
+        try {
+            return this.allAttacks[this.allAttacks.length - 1];
+        } catch {
+            return null;
+        }
     }
 
-    getLastAttackCoordinate(){
-        return this.getLastAttack()[0];
+    getLastAttackCoordinate() {
+        try {
+            return this.getLastAttack()[0];
+        } catch {
+            return null;
+        }
     }
 
-    getLastAttackOutcome(){
-        return this.getLastAttack()[1];
+    getLastAttackOutcome() {
+        try {
+            return this.getLastAttack()[1];
+        } catch {
+            return null;
+        }
     }
 
 }
@@ -228,8 +240,8 @@ export class GameFlow {
 
         if (this.getOpponent().playerBoard.validadeCoordinate([x, y])) {
 
-            let outcome = this.getOpponent().playerBoard.receiveAttack([x,y]);
-            this.getActivePlayer().attackLog.recordAttack([[x,y],outcome]);
+            let outcome = this.getOpponent().playerBoard.receiveAttack([x, y]);
+            this.getActivePlayer().attackLog.recordAttack([[x, y], outcome]);
 
             //isso tem que refactor por conta do "displayController"
             //      displayController.updDisplayBoard();
@@ -277,6 +289,27 @@ export class GameFlow {
             x = Math.floor(Math.random() * 10) + 1;
             y = Math.floor(Math.random() * 10) + 1;
         }
-        this.selectSpace([x,y]);
+        this.selectSpace([x, y]);
+    }
+
+    readLogs() {
+        const active = this.getActivePlayer();
+        const opponent = this.getOpponent();
+        const you = {
+            name: active.name,
+            coord: active.attackLog.getLastAttackCoordinate(),
+            outcome: active.attackLog.getLastAttackOutcome(),
+        }
+        const opp = {
+            name: opponent.name,
+            coord: opponent.attackLog.getLastAttackCoordinate(),
+            outcome: opponent.attackLog.getLastAttackOutcome(),
+        }
+        let attacked;
+        if (you.coord && opp.coord) { attacked = 'both'; }
+        else if (!you.coord && opp.coord) { attacked = 'opp'; }
+        else { attacked = 'none'; }
+
+        return { you, opp, attacked };
     }
 }

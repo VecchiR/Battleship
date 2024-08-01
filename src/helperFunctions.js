@@ -68,8 +68,8 @@ export function addEventListenersToOppBoard() {
     const allSquares = document.querySelectorAll('.opp-board > .cell');
     allSquares.forEach(sqr => {
         sqr.addEventListener('click', function () {
-            sendAttackTo(sqr);
-            changeTurn();
+            const trueIfAtk = sendAttackTo(sqr);
+            if(trueIfAtk === true) {changeTurn();}
         });
     })
 }
@@ -77,8 +77,7 @@ export function addEventListenersToOppBoard() {
 export function sendAttackTo(sqr) {
     const row = parseInt(sqr.getAttribute('row'));
     const col = parseInt(sqr.getAttribute('col'));
-    console.log(row, col);
-    gameFlowObj.selectSpace([row, col]);
+    return gameFlowObj.selectSpace([row, col]);
 }
 
 
