@@ -159,6 +159,7 @@ export class DisplayController {
     }
 
     styleBoardsOutcomes(gameFlowObj) {
+        this.removeAllOutcomeAttributesFromBoards();
         try {
             this.stylePlayerBoardOutcomes(gameFlowObj);
         }
@@ -173,18 +174,25 @@ export class DisplayController {
         }
     }
 
+    removeAllOutcomeAttributesFromBoards() {
+        const cells = document.querySelectorAll('.cell[outcome]');
+        cells.forEach(cell => cell.removeAttribute('outcome'));
+    }
+
     stylePlayerBoardOutcomes(gameFlowObj) {
-        const coordinates = gameFlowObj.getActivePlayer().attackLog.getLastAttackCoordinate();
-        const outcome = gameFlowObj.getActivePlayer().attackLog.getLastAttackOutcome();
-        const boardCell = document.querySelector(`.opp-board > .cell[row="${coordinates[0]}"][col="${coordinates[1]}"]`);
-        boardCell.setAttribute('outcome', `${boardCell.textContent}`);
+        const attacks = gameFlowObj.getActivePlayer().attackLog.allAttacks;
+        attacks.forEach(a => {
+            const cell = document.querySelector(`.opp-board > .cell[row="${a[0][0]}"][col="${a[0][1]}"]`);
+            cell.setAttribute('outcome', `${cell.textContent}`);
+        });
     }
 
     styleOpponentBoardOutcomes(gameFlowObj) {
-        const coordinates = gameFlowObj.getOpponent().attackLog.getLastAttackCoordinate();
-        const outcome = gameFlowObj.getOpponent().attackLog.getLastAttackOutcome();
-        const boardCell = document.querySelector(`.player-board > .cell[row="${coordinates[0]}"][col="${coordinates[1]}"]`);
-        boardCell.setAttribute('outcome', `${boardCell.textContent}`);
+        const attacks = gameFlowObj.getOpponent().attackLog.allAttacks;
+        attacks.forEach(a => {
+            const cell = document.querySelector(`.player-board > .cell[row="${a[0][0]}"][col="${a[0][1]}"]`);
+            cell.setAttribute('outcome', `${cell.textContent}`);
+        });
     }
 
     styleMsgDisplayOutcomes(playerSpan, playerOutcome, oppSpan, oppOutcome) {
