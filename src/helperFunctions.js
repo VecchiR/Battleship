@@ -126,7 +126,8 @@ export function changeTurn() {
 
 
 export function cpuPlays() {
-    gameFlowObj.cpuAttacksRandom();
+    // gameFlowObj.cpuAttacksRandom();
+    gameFlowObj.TESTcpuAttacksBattleship();
 }
 
 

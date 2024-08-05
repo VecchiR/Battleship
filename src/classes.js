@@ -292,6 +292,15 @@ export class GameFlow {
         this.selectSpace([x, y]);
     }
 
+    TESTcpuAttacksBattleship() {
+        let x = 1;
+        let y = 1;
+        while (!this.getOpponent().playerBoard.validadeCoordinate([x, y])) {
+            y++;
+        }
+        this.selectSpace([x, y]);
+    }
+
     readLogs() {
         const active = this.getActivePlayer();
         const opponent = this.getOpponent();
