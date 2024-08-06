@@ -1,9 +1,9 @@
-import { Ship, GameBoard, Player, GameFlow } from './classes.js';
+import { GameFlow } from './classes.js';
 import { DisplayController } from './DOMstuff.js';
 
 export const displayControllerObj = new DisplayController();
 export const gameFlowObj = new GameFlow();
-export let type;
+// export let type;
 
 
 export function setupInitialScreen() {
@@ -54,7 +54,7 @@ export function setPlayers() {
     else if (p2name === '') { p2name = 'Player 2'; }
 
     gameFlowObj.setPlayers(p1name, p2name, p2type);
-    type = gameFlowObj.player2.type;
+    // type = gameFlowObj.player2.type;
 }
 
 export function initializeUI() {
@@ -109,17 +109,26 @@ export function LotsOfAttacksTEST() {
 }
 
 export function changeTurn() {
-    const gameOverState = gameFlowObj.gameOVerFlag;
-    if(gameFlowObj.playerTurn === 2 && type === 'cpu') {
+    const activePlayer = gameFlowObj.getActivePlayer();
+    const opponent = gameFlowObj.getOpponent();
+    const p2IsCpu = gameFlowObj.player2.type === 'cpu';
+    // const gameOverState = gameFlowObj.gameOVerFlag;
+
+
+    if(gameFlowObj.playerTurn === 2 && p2IsCpu) {
         cpuPlays();
+        displayControllerObj.renderBoards(gameFlowObj.player1, gameFlowObj.player2);
+    } else{
+        displayControllerObj.renderBoards(activePlayer, opponent);
     }
 
-    displayControllerObj.renderBoards(gameFlowObj.getActivePlayer(), gameFlowObj.getOpponent());
-    displayControllerObj.styleBoardsOutcomes(gameFlowObj);
 
-    displayControllerObj.updMsgDisplay(gameFlowObj, gameOverState);
-    if (type === 'human' && gameOverState === false) {
-        displayControllerObj.modalContentH2.textContent = `It's ${gameFlowObj.getActivePlayer().name}'s turn!`;
+    displayControllerObj.styleBoardsOutcomes(gameFlowObj, p2IsCpu, activePlayer,opponent);
+    displayControllerObj.updMsgDisplay(gameFlowObj, gameFlowObj.gameOVerFlag);
+    
+
+    if (!p2IsCpu && gameFlowObj.gameOVerFlag === false) {
+        displayControllerObj.modalContentH2.textContent = `It's ${activePlayer.name}'s turn!`;
         displayControllerObj.showPassDeviceScreen();
     }
 }

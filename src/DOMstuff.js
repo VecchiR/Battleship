@@ -57,6 +57,7 @@ export class DisplayController {
         this.initializeGrid(document.querySelector('.opp-board'));
     }
 
+
     updMsgDisplay(gameflowObj, gameOver) {
         const atkLogs = gameflowObj.readLogs();
         console.log(atkLogs);
@@ -72,7 +73,7 @@ export class DisplayController {
 
                 case 'opp':
                     this.msgDisplayLine1.innerHTML = `You are under attack! Select a coordinate to fire back!`;
-                    
+
                     this.msgDisplayLine2.innerHTML = `${atkLogs.opp.name}'s last attack: 
                      [${atkLogs.opp.coord}] was a <span id='outcome2' class='outcome'> ${atkLogs.opp.outcome}</span>`;
 
@@ -158,20 +159,16 @@ export class DisplayController {
         this.modal.style.display = 'none';
     }
 
-    styleBoardsOutcomes(gameFlowObj) {
+    styleBoardsOutcomes(gameFlowObj, p2IsCpu, activePlayer, opponent) {
         this.removeAllOutcomeAttributesFromBoards();
+        const player = p2IsCpu ? gameFlowObj.player1 : activePlayer;
+        const opp = p2IsCpu ? gameFlowObj.player2 : opponent;
         try {
-            this.stylePlayerBoardOutcomes(gameFlowObj);
-        }
-        catch {
-            // return;
-        }
+            this.stylePlayerBoardOutcomes(player);
+        } catch { }
         try {
-            this.styleOpponentBoardOutcomes(gameFlowObj);
-        }
-        catch {
-
-        }
+            this.styleOpponentBoardOutcomes(opp);
+        } catch { }
     }
 
     removeAllOutcomeAttributesFromBoards() {
@@ -179,16 +176,16 @@ export class DisplayController {
         cells.forEach(cell => cell.removeAttribute('outcome'));
     }
 
-    stylePlayerBoardOutcomes(gameFlowObj) {
-        const attacks = gameFlowObj.getActivePlayer().attackLog.allAttacks;
+    stylePlayerBoardOutcomes(player) {
+        const attacks = player.attackLog.allAttacks;
         attacks.forEach(a => {
             const cell = document.querySelector(`.opp-board > .cell[row="${a[0][0]}"][col="${a[0][1]}"]`);
             cell.setAttribute('outcome', `${cell.textContent}`);
         });
     }
 
-    styleOpponentBoardOutcomes(gameFlowObj) {
-        const attacks = gameFlowObj.getOpponent().attackLog.allAttacks;
+    styleOpponentBoardOutcomes(opp) {
+        const attacks = opp.attackLog.allAttacks;
         attacks.forEach(a => {
             const cell = document.querySelector(`.player-board > .cell[row="${a[0][0]}"][col="${a[0][1]}"]`);
             cell.setAttribute('outcome', `${cell.textContent}`);

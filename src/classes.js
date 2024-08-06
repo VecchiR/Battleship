@@ -243,18 +243,10 @@ export class GameFlow {
             let outcome = this.getOpponent().playerBoard.receiveAttack([x, y]);
             this.getActivePlayer().attackLog.recordAttack([[x, y], outcome]);
 
-            //isso tem que refactor por conta do "displayController"
-            //      displayController.updDisplayBoard();
 
-
-            if (this.checkGameOver()) {
-                //isso tambem
-                //      displayController.updMsgDisplay(this.gameOverMsg);
-            } else {
+            if (!this.checkGameOver()) {
                 this.changeActivePlayer();
-                //e isso tambem
-                //      displayController.updMsgDisplay('turn');
-            }
+            } 
 
             return true;
         }
