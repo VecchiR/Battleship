@@ -2,12 +2,11 @@ import { GameFlow } from './classes.js';
 import { DisplayController } from './DOMstuff.js';
 
 export const displayControllerObj = new DisplayController();
-export const gameFlowObj = new GameFlow();
-// export let type;
+export let gameFlowObj = new GameFlow();
 
 
-export function setupInitialScreen() {
-    displayControllerObj.setupModal();
+export function setupInitialScreen(reset = false) {
+    if (!reset) { displayControllerObj.setupModal(); }
     addEventListenersToP2Selection();
     addEventListenerToStartButton();
 }
@@ -69,7 +68,7 @@ export function addEventListenersToOppBoard() {
     allSquares.forEach(sqr => {
         sqr.addEventListener('click', function () {
             const trueIfAtk = sendAttackTo(sqr);
-            if(trueIfAtk === true) {changeTurn();}
+            if (trueIfAtk === true) { changeTurn(); }
         });
     })
 }
@@ -112,25 +111,36 @@ export function changeTurn() {
     const activePlayer = gameFlowObj.getActivePlayer();
     const opponent = gameFlowObj.getOpponent();
     const p2IsCpu = gameFlowObj.player2.type === 'cpu';
-    // const gameOverState = gameFlowObj.gameOVerFlag;
 
 
-    if(gameFlowObj.playerTurn === 2 && p2IsCpu) {
+    if (gameFlowObj.playerTurn === 2 && p2IsCpu) {
         cpuPlays();
         displayControllerObj.renderBoards(gameFlowObj.player1, gameFlowObj.player2);
-    } else{
+    } else {
         displayControllerObj.renderBoards(activePlayer, opponent);
     }
 
 
-    displayControllerObj.styleBoardsOutcomes(gameFlowObj, p2IsCpu, activePlayer,opponent);
+    displayControllerObj.styleBoardsOutcomes(gameFlowObj, p2IsCpu, activePlayer, opponent);
     displayControllerObj.updMsgDisplay(gameFlowObj, gameFlowObj.gameOVerFlag);
-    
+
 
     if (!p2IsCpu && gameFlowObj.gameOVerFlag === false) {
         displayControllerObj.modalContentH2.textContent = `It's ${activePlayer.name}'s turn!`;
         displayControllerObj.showPassDeviceScreen();
     }
+
+    else if (gameFlowObj.gameOVerFlag === true) {
+        displayControllerObj.addResetButton();
+        const resetBtn = document.querySelector('.reset-button'); 
+        resetBtn.addEventListener('click', resetGame);
+    }
+}
+
+function resetGame() {
+    gameFlowObj = new GameFlow();
+    displayControllerObj.returnToInitialScreen();
+    setupInitialScreen();
 }
 
 

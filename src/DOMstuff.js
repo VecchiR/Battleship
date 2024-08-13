@@ -165,10 +165,10 @@ export class DisplayController {
         const opp = p2IsCpu ? gameFlowObj.player2 : opponent;
         try {
             this.stylePlayerBoardOutcomes(player);
-        } catch { }
+        } catch { /* empty */ }
         try {
             this.styleOpponentBoardOutcomes(opp);
-        } catch { }
+        } catch { /* empty */ }
     }
 
     removeAllOutcomeAttributesFromBoards() {
@@ -199,12 +199,36 @@ export class DisplayController {
 
 
     //ADICIONAR UM BOTAO DE RESET NO FIM DA PARTIDA PRA COMEÇAR DE NOVO
-    // resetScreen() {
-    //     gameboard.resetBoard();
-    //     gameflow.turnOffGameOverFlag();
-    //     this.mainContainer.removeChild(this.gameContainer);
-    //     this.mainContainer.appendChild(this.startContainer);
-    // }
+    addResetButton() {
+        const resetBtn = document.createElement('button');
+        resetBtn.classList.add('reset-button');
+        resetBtn.textContent = 'RESET';
+        const gameContainer = document.querySelector('.game-container');
+        gameContainer.appendChild(resetBtn);
+    }
 
+    returnToInitialScreen() {
+        const mainContainer = document.querySelector('.main-container');
+        mainContainer.innerHTML = '';
+
+        const startContainer = document.createElement('div');
+        startContainer.classList.add('start-container');
+        mainContainer.appendChild(startContainer);
+
+        const player1Label = document.createElement('label');
+        player1Label.setAttribute('for', 'player1');
+        player1Label.innerHTML = '<span>P1:</span><input type="text" name="player1" id="player1" placeholder="Player 1">';
+        startContainer.appendChild(player1Label);
+
+        const player2Label = document.createElement('label');
+        player2Label.setAttribute('for', 'player2');
+        player2Label.innerHTML = '<span>P2:</span><input type="text" name="player2" id="player2" placeholder="CPU" disabled><select name="type" id="type"><option value="cpu">CPU</option><option value="human">HUM</option></select>';
+        startContainer.appendChild(player2Label);
+
+        const startButton = document.createElement('button');
+        startButton.classList.add('start', 'btn');
+        startButton.textContent = 'Start!';
+        startContainer.appendChild(startButton);
+    }
 
 }
